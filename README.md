@@ -58,12 +58,10 @@ docker run --name pg-data postgres-data /bin/ls
 ```
 This will initialise the data container.
 
-REMEMBER the data container is initialised in the background, and if you remove the process running the container under ```
-docker ps -a -q
-```
-you will lose all your data
+REMEMBER the data container is initialised in the background, and if you remove the process running the container under `docker ps -a -q` you will lose all your data.
 
 Once you have built to postgres db container you can now just run the following
+
 ```
 docker run -i -t -p 5432:5432 --volumes-from "pg-data" -e POSTGRES_USER=dbuser -e POSTGRES_PASSWORD=password postgresdb
 ```
