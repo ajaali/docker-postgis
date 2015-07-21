@@ -47,3 +47,26 @@ CREATE EXTENSION postgis_topology;
 
 See [the PostGIS documentation](http://postgis.net/docs/postgis_installation.html#create_new_db_extensions)
 for more details on your options for creating and using a spatially-enabled database.
+
+## Persisting Data
+The data container needs to run seperately to persist the data the container then needs to be linked to the docker server.
+
+```bash
+cd data_container
+docker build -t postgres-data .
+docker run --name pg-data postgres-data /bin/ls
+```
+This will initialise the data container.
+
+REMEMBER the data container is initialised in the background, and if you remove the process running the container under ```
+docker ps -a -q
+```
+you will lose all your data
+
+Once you have built to postgres db container you can now just run the following
+```
+docker run -i -t -p 5432:5432 --volumes-from "pg-data" -e POSTGRES_USER=dbuser -e POSTGRES_PASSWORD=password postgresdb
+```
+
+
+
